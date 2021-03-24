@@ -11,18 +11,16 @@ class CRYPTO::API
         request = URI.parse(@url_list)
         response = Net::HTTP.get_response(request)
         crypto_hash = JSON.parse(response.body)
-        self.create_cryptocurrency_data(crypto_hash)
+        self.create_cryptocurrency_objects(crypto_hash)
     end
 
-    def create_cryptocurrency_data(crypto_hash)
+    def create_cryptocurrency_objects(crypto_hash)
         crypto_hash.each do |crypto_object|
             # might take a while to load
             CRYPTO::Cryptocurrency.new(crypto_object)
-            pry.binding
+            # pry.binding
         end
-    end
-
-    def to_a
+        # pry.binding
     end
 
     # def create_cryptocurrency_objects(crypto_hash)
