@@ -2,6 +2,8 @@ require 'pry'
 require 'net/http'
 require 'open-uri'
 require 'json'
+require 'colorize'
+require 'tty-prompt'
 
 require_relative '../lib/modules/crypto.rb'
 require_relative '../lib/api'

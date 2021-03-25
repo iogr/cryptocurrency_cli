@@ -20,14 +20,4 @@ class CRYPTO::API
             CRYPTO::Cryptocurrency.new(crypto_object)
         end
     end
-
-    def to_a
-        puts "oywey"
-    end
-
-    # def create_cryptocurrency_objects(crypto_hash)
-    #     crypto_hash.each do |crypto_object|
-    #         CRYPTO::Cryptocurrency.new(crypto_object)
-    #     end
-    # end
 end
