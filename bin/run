@@ -2,5 +2,5 @@
 
 require_relative '../config/environment'
 
-CRYPTO::API.new.get_cryptocurrencies
-# CRYPTO::CLI.new.run
+# CRYPTO::API.new.get_cryptocurrencies
+CRYPTO::CLI.new.run

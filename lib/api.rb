@@ -18,9 +18,11 @@ class CRYPTO::API
         crypto_hash.each do |crypto_object|
             # might take a while to load
             CRYPTO::Cryptocurrency.new(crypto_object)
-            # pry.binding
         end
-        # pry.binding
+    end
+
+    def to_a
+        puts "oywey"
     end
 
     # def create_cryptocurrency_objects(crypto_hash)
