@@ -10,22 +10,22 @@ class CRYPTO::CLI
     end
 
     def menu
-        choices = %w(emacs nano vim)
-        input = @prompt.select("Select an editor?") do |menu|
-            menu.choice :nano,  "/bin/nano"
-            menu.choice :vim,   "/usr/bin/vim"
-            menu.choice :emacs, "/usr/bin/emacs"
-        end
-
-        input = @prompt.select("Hey?", ) do |menu|
-            menu.choice "Yes"
-            menu.choice "No"
+        choices = %w(BUY SELL SKIP)
+        input = @prompt.select("Select an action?") do |menu|
+            menu.choice :BUY, "BUY"
+            menu.choice :SELL, "SELL"
+            menu.choice :SKIP, "SKIP"
         end
     end
 
     def currency_test
+        puts @sample_objects[0]
         CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
-            puts "#{index}. Currency symbol: #{cryptocurrency.symbol} Price: $#{cryptocurrency.current_price}"
+            if cryptocurrency.price_change_24h > 0
+                puts "#{index}. #{cryptocurrency.id.capitalize}    $#{cryptocurrency.current_price}    $#{cryptocurrency.price_change_24h}    #{cryptocurrency.last_updated}".colorize(:green)
+            else
+                puts "#{index}. #{cryptocurrency.id.capitalize}    $#{cryptocurrency.current_price}    $#{cryptocurrency.price_change_24h}    #{cryptocurrency.last_updated}".colorize(:red)
+            end
         end
     end
 end
