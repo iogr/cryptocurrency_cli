@@ -14,4 +14,8 @@ class CRYPTO::Cryptocurrency
     def self.all
         @@all
     end
+
+    def get_data
+        self.name
+    end
 end

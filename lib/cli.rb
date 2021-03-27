@@ -24,13 +24,12 @@ class CRYPTO::CLI
     end
 
     def currency_test
-        puts  "Rank   Currency      PRICE         PRICE_CHANGE_24h       DATETIME".colorize(:green)
-        puts "#index  id        current_price     price_change_24h       last_updated"
-        puts  "--------------------------------------------------------------------------"
-
-        puts "1     #{@sample_objects[0].dig 'id'}       #{@sample_objects[0].dig 'current_price'}         #{@sample_objects[0].dig 'price_change_24h'}         #{@sample_objects[0].dig 'last_updated'}"
-        puts "2     #{@sample_objects[1].dig 'id'}       #{(@sample_objects[1].dig 'current_price').to_s.colorize(:green)}         #{@sample_objects[1].dig 'price_change_24h'}         #{@sample_objects[0].dig 'last_updated'}"
-        puts "3     #{@sample_objects[2].dig 'id'}       #{@sample_objects[2].dig 'current_price'}         #{@sample_objects[2].dig 'price_change_24h'}         #{@sample_objects[0].dig 'last_updated'}"
-        # pry.binding
+        CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+            puts "#{index}. Currency symbol: #{cryptocurrency.symbol} Price: $#{cryptocurrency.current_price}"
+        end
     end
 end
+
+#puts  "Rank   Currency      PRICE         PRICE_CHANGE_24h       DATETIME".colorize(:green)
+#puts "#index  id        current_price     price_change_24h       last_updated"
+#puts  "--------------------------------------------------------------------------"
