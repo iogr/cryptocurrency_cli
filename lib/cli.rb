@@ -19,7 +19,7 @@ class CRYPTO::CLI
     end
 
     def currency_test
-        puts @sample_objects[0]
+        # puts @sample_objects[0]
         CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
             if cryptocurrency.price_change_24h > 0
                 puts "#{index}. #{cryptocurrency.id.capitalize}    $#{cryptocurrency.current_price}    $#{cryptocurrency.price_change_24h}    #{cryptocurrency.last_updated}".colorize(:green)
