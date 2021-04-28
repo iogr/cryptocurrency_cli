@@ -19,13 +19,13 @@ class CRYPTO::CLI
     end
 
     def currency_test
-        # puts @sample_objects[0]
         CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
             if cryptocurrency.price_change_24h > 0
-                puts "#{index}. #{cryptocurrency.id.capitalize}    $#{cryptocurrency.current_price}    $#{cryptocurrency.price_change_24h}    #{cryptocurrency.last_updated}".colorize(:green)
+                puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{cryptocurrency.price_change_24h.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:green)
             else
-                puts "#{index}. #{cryptocurrency.id.capitalize}    $#{cryptocurrency.current_price}    $#{cryptocurrency.price_change_24h}    #{cryptocurrency.last_updated}".colorize(:red)
+                puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{cryptocurrency.price_change_24h.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:red)
             end
+            puts "-----------------------------------------------------------------------------------------"
         end
     end
 end
