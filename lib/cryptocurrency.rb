@@ -18,4 +18,8 @@ class CRYPTO::Cryptocurrency
     def get_data
         self.name
     end
+
+    def values_at
+        self.input
+    end
 end
