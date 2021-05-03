@@ -2,6 +2,7 @@
 
 class CRYPTO::Cryptocurrency
     @@all = []
+    @@input = []
 
     def initialize(crypto_hash)
         crypto_hash.each do |key, value|
@@ -15,11 +16,7 @@ class CRYPTO::Cryptocurrency
         @@all
     end
 
-    def get_data
-        self.name
-    end
-
-    def values_at
-        self.input
+    def self.input
+        @@input
     end
 end
