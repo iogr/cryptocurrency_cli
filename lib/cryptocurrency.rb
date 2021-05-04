@@ -19,4 +19,7 @@ class CRYPTO::Cryptocurrency
     def self.input
         @@input
     end
+
+    def input
+    end
 end

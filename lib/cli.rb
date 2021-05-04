@@ -2,6 +2,7 @@ class CRYPTO::CLI
     def initialize
         @sample_objects = CRYPTO::API.new.get_cryptocurrencies
         @prompt = TTY::Prompt.new(help_color: :yellow)
+        CRYPTO::API.new.get_all_cryptocurrencies_data
     end
 
     def run
@@ -43,6 +44,7 @@ class CRYPTO::CLI
             end
         end
         puts  "--------------------------------------------------------------------------"
+        menu
     end
 
     def currency_atl
@@ -55,6 +57,7 @@ class CRYPTO::CLI
                 puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{cryptocurrency.atl.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:red)
             end
         end
+        menu
     end
 
     def currency_total_volume
@@ -67,6 +70,7 @@ class CRYPTO::CLI
                 puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{cryptocurrency.total_volume.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:red)
             end
         end
+        menu
     end
 
     def query_key
@@ -76,15 +80,16 @@ class CRYPTO::CLI
         # pry.binding
         if @sample_objects[0].has_key?(input)
             CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
-                if cryptocurrency.price_change_24h > 0
-                    puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{CRYPTO::Cryptocurrency.input.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:green)
-                else
-                    puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{CRYPTO::Cryptocurrency.input.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:red)
-                end
+                 if cryptocurrency.price_change_24h > 0
+                    puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{CRYPTO::CryptocurrencySearch.input(input).to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:green)
+                 else
+                     puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{CRYPTO::CryptocurrencySearch.input(input).to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:red)
+                 end
             end
         else
             puts "Can't find that key"
         end
+        menu
     end
 
     def exit_cli

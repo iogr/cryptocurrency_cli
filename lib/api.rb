@@ -21,4 +21,18 @@ class CRYPTO::API
             CRYPTO::Cryptocurrency.new(crypto_object)
         end
     end
+
+    def get_all_cryptocurrencies_data
+        url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
+        request = URI.parse(url)
+        response = Net::HTTP.get_response(request)
+        crypto_hash = JSON.parse(response.body)
+        self.create_cryptocurrency_data(crypto_hash)
+    end
+
+    def create_cryptocurrency_data(crypto_hash)
+        crypto_hash.each do |crypto_object|
+            CRYPTO::CryptocurrencySearch.new(crypto_object)
+        end
+    end
 end
