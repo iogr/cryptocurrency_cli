@@ -12,37 +12,67 @@ describe CRYPTO::CLI.new do
     end
 
     it 'CRYPTO::Cryptocurrency.all should include bitcoin' do
-      # cryptocurrency = CRYPTO::Cryptocurrency.help_hash[:fifty_fifty]
-
       CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
         cryptocurrency.id.capitalize.to include("Bitcoin") if index == 0
       end
     end
-    # .to include("1.")
-    # should include("Bitcoin")
-    # "#{CRYPTO::Cryptocurrency.all}").should include('Bitcoin')
+
+    it 'CRYPTO::Cryptocurrency.all.each exists and returns plural current_price' do
+      expect(
+        CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+          "#{cryptocurrency.current_price}"
+        end).to be
+    end
+
+    it 'Method currency_price_change_24h exists and returns plural price_change_24h' do
+      expect(
+        CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+          "#{cryptocurrency.price_change_24h}"
+        end).to be
+    end
+
+    it 'Method currency_atl exists and returns currency table' do
+      expect(
+        CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+          "#{cryptocurrency.atl}"
+        end).to be
+    end
+
+    it 'Method currency_total_volume exists and returns currency table' do
+      expect(
+        CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+          "#{cryptocurrency.total_volume}"
+        end).to be
+    end
+
+    it 'Method currency_market_cap exists and returns currency table' do
+      expect(
+        CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+          "#{cryptocurrency.market_cap}"
+        end).to be
+    end
+
+    it 'Method query_key returns hash with queried key (sample id in input)' do
+      input = "id"
+
+      expect(
+        "#{CRYPTO::CryptocurrencySearch.input(input)}").to be
+
+      expect(
+        CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+          puts "#{CRYPTO::CryptocurrencySearch.input(input)}"
+        end).to be
+    end
 
     it 'sample object exists' do
       expect(
         :sample_object).to be
-      # should include("1.")
-      # should include("Bitcoin")
     end
 
-    it 'currency_price_change_24h returns currency table' do
-      expect(
-        :sample_object).to be
-    end
-  end
-
-  context 'command user interface' do
-    # it "user input" do
-    # end
-
-    # it 'data is get' do
-    # end
-    #
-    # it 'correct data' do
+    # it 'input id returns hash' do
     # end
   end
+
+  # context 'command user interface' do
+  # end
 end
