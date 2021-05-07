@@ -11,9 +11,19 @@ describe CRYPTO::CLI.new do
         "#{CRYPTO::Cryptocurrency.all}").to be
     end
 
+    it 'CRYPTO::Cryptocurrency.all exists' do
+      expect(
+        "#{CRYPTO::Cryptocurrency.all}").to be_an Object
+
+      CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+        expect(cryptocurrency.id).not_to be_empty
+      end
+    end
+
     it 'CRYPTO::Cryptocurrency.all should include bitcoin' do
       CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
         cryptocurrency.id.capitalize.to include("Bitcoin") if index == 0
+        expect(cryptocurrency.id).to be_a String
       end
     end
 
@@ -56,11 +66,8 @@ describe CRYPTO::CLI.new do
       input = "id"
 
       expect(
-        "#{CRYPTO::CryptocurrencySearch.input(input)}").to be
-
-      expect(
         CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
-          puts "#{CRYPTO::CryptocurrencySearch.input(input)}"
+          "#{CRYPTO::CryptocurrencySearch.input(input)}"
         end).to be
     end
 
@@ -69,10 +76,35 @@ describe CRYPTO::CLI.new do
         :sample_object).to be
     end
 
-    # it 'input id returns hash' do
-    # end
+    it 'Method query_key returns all said keys' do
+      CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+        expect([cryptocurrency.market_cap,
+                cryptocurrency.id,
+                cryptocurrency.name,
+                cryptocurrency.image,
+                cryptocurrency.current_price,
+                cryptocurrency.market_cap,
+                cryptocurrency.market_cap_rank,
+                cryptocurrency.fully_diluted_valuation,
+                cryptocurrency.total_volume,
+                cryptocurrency.high_24h,
+                cryptocurrency.low_24h,
+                cryptocurrency.price_change_24h,
+                cryptocurrency.price_change_percentage_24h,
+                cryptocurrency.market_cap_change_24h,
+                cryptocurrency.market_cap_change_percentage_24h,
+                cryptocurrency.circulating_supply,
+                cryptocurrency.total_supply,
+                cryptocurrency.max_supply,
+                cryptocurrency.ath,
+                cryptocurrency.ath_change_percentage,
+                cryptocurrency.ath_date,
+                cryptocurrency.atl,
+                cryptocurrency.atl_change_percentage,
+                cryptocurrency.atl_date,
+                cryptocurrency.roi,
+                cryptocurrency.last_updated]).to be
+      end
+    end
   end
-
-  # context 'command user interface' do
-  # end
 end
