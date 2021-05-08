@@ -62,6 +62,13 @@ describe CRYPTO::CLI.new do
         end).to be
     end
 
+    it 'Method currency_atl exists and returns currency table' do
+      expect(
+        CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+          "#{cryptocurrency.symbol}"
+        end).to be
+    end
+
     it 'Method query_key returns hash with queried key (sample id in input)' do
       input = "id"
 

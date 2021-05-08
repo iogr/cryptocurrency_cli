@@ -15,6 +15,7 @@ class CRYPTO::CLI
             menu.choice "Currencies by ATL"
             menu.choice "Currencies by Total Volume"
             menu.choice "Currencies by Market Cap"
+            menu.choice "Currencies by Symbol"
             menu.choice "Enter currency key"
             menu.choice "Exit"
         end
@@ -27,6 +28,8 @@ class CRYPTO::CLI
             currency_total_volume
         elsif input == "Currencies by Market Cap"
             currency_market_cap
+        elsif input == "Currencies by Symbol"
+            currency_symbol
         elsif input == "Enter currency key"
             query_key
         else
@@ -84,6 +87,18 @@ class CRYPTO::CLI
                 puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{cryptocurrency.market_cap.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:green)
             else
                 puts ["#{index}.", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{cryptocurrency.market_cap.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:red)
+            end
+        end
+        menu
+    end
+
+    def currency_symbol
+        puts "Currencies by Symbol"
+            CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
+            if cryptocurrency.price_change_24h > 0
+                puts ["#{index}.", "#{cryptocurrency.symbol.upcase.to_s.ljust(5)}", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{cryptocurrency.market_cap.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:green)
+            else
+                puts ["#{index}.", "#{cryptocurrency.symbol.upcase.to_s.ljust(5)}", cryptocurrency.id.capitalize.ljust(20), "$#{cryptocurrency.current_price.to_s.ljust(18)}", "$#{cryptocurrency.market_cap.to_s.ljust(18)}", cryptocurrency.last_updated.to_s.ljust(18)].join(' ').colorize(:red)
             end
         end
         menu
