@@ -1,6 +1,7 @@
 class CRYPTO::CLI
     def initialize
         @sample_objects = CRYPTO::API.new.get_cryptocurrencies
+        @status = CRYPTO::API.new.get_status_update
         @prompt = TTY::Prompt.new(help_color: :yellow)
         CRYPTO::API.new.get_all_cryptocurrencies_data
     end
@@ -17,6 +18,7 @@ class CRYPTO::CLI
             menu.choice "Currencies by Market Cap"
             menu.choice "Currencies by Symbol"
             menu.choice "Enter currency key"
+            menu.choice "View status update"
             menu.choice "Exit"
         end
 
@@ -32,6 +34,8 @@ class CRYPTO::CLI
             currency_symbol
         elsif input == "Enter currency key"
             query_key
+        elsif input == "View status update"
+            status_update
         else
             exit_cli
         end
@@ -108,7 +112,6 @@ class CRYPTO::CLI
         puts "{id=>bitcoin, symbol=>btc, name=>Bitcoin, image=>https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579, current_price=>54743, market_cap=>1024268613412, market_cap_rank=>1, fully_diluted_valuation=>1150639700646, total_volume=>47267078492, high_24h=>55669, low_24h=>53988, price_change_24h=>-403.4445885, price_change_percentage_24h=>-0.73158, market_cap_change_24h=>5126751365, market_cap_change_percentage_24h=>0.50305, circulating_supply=>18693637.0, total_supply=>21000000.0, max_supply=>21000000.0, ath=>64805, ath_change_percentage=>-15.59813, ath_date=>2021-04-14T11:54:46.763Z, atl=>67.81, atl_change_percentage=>80562.44435, atl_date=>2013-07-06T00:00:00.000Z, roi=>nil, last_updated=>2021-04-28T14:37:40.393Z}"
         input = @prompt.ask("Please type a query key:", default: "e.g. market_cap_rank")
 
-        # pry.binding
         if @sample_objects[0].has_key?(input)
             CRYPTO::Cryptocurrency.all.each.with_index(1) do |cryptocurrency, index|
                  if cryptocurrency.price_change_24h > 0
@@ -119,6 +122,13 @@ class CRYPTO::CLI
             end
         else
             puts "Can't find that key"
+        end
+        menu
+    end
+
+    def status_update
+        CRYPTO::Status.all.each do |status, index|
+            puts status
         end
         menu
     end
