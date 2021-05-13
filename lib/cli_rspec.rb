@@ -4,6 +4,7 @@ require_relative 'cli.rb'
 
 describe CRYPTO::CLI.new do
   context 'data' do
+    specify { expect(@status).to be_nil }
     let(:sample_object) { CRYPTO::API.new.get_cryptocurrencies[0] }
 
     it 'CRYPTO::Cryptocurrency.all exists' do
@@ -69,6 +70,27 @@ describe CRYPTO::CLI.new do
         end).to be
     end
 
+    it 'Method status_update exists and returns status update' do
+      @status = CRYPTO::API.new.get_status_update
+
+      expect(@status.flatten[1][1].dig('user')).to be
+      expect(
+        ["#{0}.", "#{@status.flatten[1][0].dig('user')}:",
+         "#{@status.flatten[1][0].dig("description")}.",
+         "Created at: #{@status.flatten[1][0].dig("created_at")}"]
+          .join(' ')
+      ).to be
+    end
+
+    it 'status_update_count counts number of key user' do
+      @status = CRYPTO::API.new.get_status_update
+
+      expect(
+        status_update_count =
+          @status.flatten[1].count { |key, _| key.to_s.include?('user') }
+      ).to be_an(Integer)
+    end
+
     it 'Method query_key returns hash with queried key (sample id in input)' do
       input = "id"
 
@@ -79,8 +101,7 @@ describe CRYPTO::CLI.new do
     end
 
     it 'sample object exists' do
-      expect(
-        :sample_object).to be
+      expect(:sample_object).to be
     end
 
     it 'Method query_key returns all said keys' do
