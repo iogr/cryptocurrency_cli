@@ -39,6 +39,7 @@ class CRYPTO::CLI
         else
             exit_cli
         end
+        status_update
     end
 
     def currency_price_change_24h
@@ -127,8 +128,15 @@ class CRYPTO::CLI
     end
 
     def status_update
-        CRYPTO::Status.all.each do |status, index|
-            puts status
+        # @status.flatten[1] -> {"description"=>"April Decred Journal is out!\r\n\r\nCheck out the detailed report on development, network and social stats, ecosystem growth and new media content.\r\n\r\nhttps://xaur.github.io/decred-news/journal/202104", "category"=>"general", "created_at"=>"2021-05-12T20:34:34.452Z", "user"=>"jz", "user_title"=>"International Ops Lead", "pin"=>false, "project"=>{"type"=>"Coin", "id"=>"decred", "name"=>"Decred", "symbol"=>"dcr", "image"=>{"thumb"=>"https://assets.coingecko.com/coins/images/329/thumb/decred.png?1547034093", "small"=>"https://assets.coingecko.com/coins/images/329/small/decred.png?1547034093", "large"=>"https://assets.coingecko.com/coins/images/329/large/decred.png?1547034093"}}}
+        status_update_count = @status.flatten[1].count { |k, _| k.to_s.include?('user') }
+        if status_update_count&.nonzero?
+            puts "There's #{status_update_count} status update(s):"
+            @status.flatten[1].each.with_index(0) do |status, index|
+                puts ["#{index + 1}.", "#{@status.flatten[1][index].dig('user')}:", "#{@status.flatten[1][index].dig("description").to_s.ljust(18)}.", "Created at: #{@status.flatten[1][index].dig("created_at").to_s.ljust(18)}"].join(' ').colorize(:green)
+            end
+        else
+            puts "Found no status updates"
         end
         menu
     end

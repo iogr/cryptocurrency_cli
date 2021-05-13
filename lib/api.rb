@@ -5,7 +5,6 @@ class CRYPTO::API
         # CoinGecko API V3
         # https://www.coingecko.com/api/documentations/v3
         @url_list = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=25&page=1&sparkline=false"
-        # @status_update = "https://api.coingecko.com/api/v3/coins/status_updates?per_page=5&page=1"
         @status_update = "https://api.coingecko.com/api/v3/status_updates?category=general&project_type=&per_page=5&page=1"
     end
 

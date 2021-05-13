@@ -2,7 +2,6 @@
 
 class CRYPTO::Status
   @@all = []
-  @@input = []
 
   def initialize(status_hash)
     status_hash.each do |key, value|
