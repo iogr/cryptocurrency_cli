@@ -12,33 +12,16 @@ class CRYPTO::CLI
 
     def menu
         input = @prompt.select("Select an action?") do |menu|
-            menu.choice "Currencies by Price_change_24h"
-            menu.choice "Currencies by ATL"
-            menu.choice "Currencies by Total Volume"
-            menu.choice "Currencies by Market Cap"
-            menu.choice "Currencies by Symbol"
-            menu.choice "Enter currency key"
-            menu.choice "View status update"
-            menu.choice "Exit"
+            menu.choice "Currencies by Price_change_24h", -> { currency_price_change_24h }
+            menu.choice "Currencies by ATL", -> { currency_atl }
+            menu.choice "Currencies by Total Volume", -> { currency_total_volume }
+            menu.choice "Currencies by Market Cap", -> { currency_market_cap }
+            menu.choice "Currencies by Symbol", -> { currency_symbol }
+            menu.choice "Enter currency key", -> { query_key }
+            menu.choice "View status update", -> { status_update }
+            menu.choice "Exit", -> { exit_cli }
         end
 
-        if input == "Currencies by Price_change_24h"
-            currency_price_change_24h
-        elsif input == "Currencies by ATL"
-            currency_atl
-        elsif input == "Currencies by Total Volume"
-            currency_total_volume
-        elsif input == "Currencies by Market Cap"
-            currency_market_cap
-        elsif input == "Currencies by Symbol"
-            currency_symbol
-        elsif input == "Enter currency key"
-            query_key
-        elsif input == "View status update"
-            status_update
-        else
-            exit_cli
-        end
         status_update
     end
 
